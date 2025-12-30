@@ -25,7 +25,7 @@ cat <<'EOF' > index.html
 </body>
 </html>
 EOF
-mkdir src
+mkdir -p src
 cat <<'EOF' > src/lib.mts
 export function getGreeting(name: string): string {
   return `Hello, ${name}!`;
