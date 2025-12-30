@@ -2,10 +2,25 @@
 
 Fork this to get a project skeleton with an index HTML file, styles, TypeScript, and Jasmine web tests. Commands:
 
-`pnpm build`
-`live-server` (requires `npm install -g live-server`) <-- this does hot reloading
-`pnpm test` <-- runs the tests to completion in headless Chrome, emits logs to stdout/stderr
-`pnpm serveTests` <-- run a test server to debug the tests in a browser
+```sh
+pnpm build
+```
+```sh
+live-server
+```
+(requires
+```sh
+npm install -g live-server
+```
+which does hot reloading)
+```sh
+pnpm test
+```
+^ runs the tests to completion in headless Chrome, emits logs to stdout/stderr
+```sh
+pnpm serveTests
+```
+^ run a test server to debug the tests in a browser
 
 ## Alternative: Just follow these steps again
 
@@ -47,16 +62,28 @@ EOF
 
 ### Initialize project infra
 
-`pnpm init`
-`pnpm add -D typescript` (NOT `tsc` for some reason; that seems to result in having the `tsc` command still point to the global installation instead of the local one)
-`pnpm exec tsc init` (this creates a default tsconfig.json)
+```sh
+pnpm init
+```
+```sh
+pnpm add -D typescript
+```
+^ NOT `tsc` for some reason; that seems to result in having the `tsc` command still point to the global installation instead of the local one
+```sh
+pnpm exec tsc init
+```
+^ this creates a default tsconfig.json
 Set module resolution according to the TS docs (there's a link to the docs in tsconfig.json)
 Add */**/*.mts to included files if planning to use that extension
 As shown, write imports with .mjs (or .js) at the end of the path for tsc to find the corresponding .mts (or .ts) file.
 Add a build script in the package.json. I've gone with `rm -rf build && tsc` to make sure stale filepaths get cleared out after name changes; probably should get rid of the rm -rf part if builds get slow in the future.
 
-`pnpm add -D jasmine-browser-runner`
-`pnpm exec jasmine-browser-runner init`
+```sh
+pnpm add -D jasmine-browser-runner
+```
+```sh
+pnpm exec jasmine-browser-runner init
+```
 Move the emitted jasmine-browser.mjs file to root dir and delete the spec dir (personal preference)
 Add test and serveTests scripts to package.json:
 ```
