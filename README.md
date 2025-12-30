@@ -9,6 +9,44 @@ Fork this to get a project skeleton with an index HTML file, styles, TypeScript,
 
 ## Alternative: Just follow these steps again
 
+### Initialize source files
+
+```sh
+cat <<EOF > index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="src/style.css">
+    <title>Vanilla TS</title>
+</head>
+<body>
+    <script type="module" src="dist/main.mjs"></script>
+</body>
+</html>
+EOF
+mkdir src
+cat <<EOF > src/lib.mts
+export function getGreeting(name: string): string {
+  return `Hello, ${name}!`;
+}
+EOF
+cat <<EOF > src/main.mts
+import {getGreeting} from './lib.mjs';
+
+const greeting = document.createElement('div');
+greeting.innerText = getGreeting('Max');
+document.body.appendChild(greeting);
+EOF
+cat <<EOF > src/style.css
+body {
+  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+}
+EOF
+```
+
+### Initialize project infra
+
 `pnpm init`
 `pnpm add -D typescript` (NOT `tsc` for some reason; that seems to result in having the `tsc` command still point to the global installation instead of the local one)
 `pnpm exec tsc init` (this creates a default tsconfig.json)
