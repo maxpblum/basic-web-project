@@ -65,6 +65,9 @@ EOF
 ```sh
 pnpm init
 ```
+
+Add `"type": "module"` to `package.json` for ES module compatibility. Something goes wrong if you don't do this, I forget what.
+
 ```sh
 pnpm add -D typescript
 ```
