@@ -70,7 +70,7 @@ pnpm add -D typescript
 ```
 ^ NOT `tsc` for some reason; that seems to result in having the `tsc` command still point to the global installation instead of the local one
 ```sh
-pnpm exec tsc init
+pnpm exec tsc --init
 ```
 ^ this creates a default tsconfig.json
 Set module resolution according to the TS docs (there's a link to the docs in tsconfig.json)
@@ -81,7 +81,7 @@ Add a build script in the package.json. I've gone with `rm -rf build && tsc` to 
 ```sh
 pnpm add -D jasmine-browser-runner
 ```
-```sh
+```sh 
 pnpm exec jasmine-browser-runner init
 ```
 Move the emitted jasmine-browser.mjs file to root dir and delete the spec dir (personal preference)
