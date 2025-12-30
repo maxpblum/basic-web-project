@@ -12,7 +12,7 @@ Fork this to get a project skeleton with an index HTML file, styles, TypeScript,
 ### Initialize source files
 
 ```sh
-cat <<EOF > index.html
+cat <<'EOF' > index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,19 +26,19 @@ cat <<EOF > index.html
 </html>
 EOF
 mkdir src
-cat <<EOF > src/lib.mts
+cat <<'EOF' > src/lib.mts
 export function getGreeting(name: string): string {
   return `Hello, ${name}!`;
 }
 EOF
-cat <<EOF > src/main.mts
+cat <<'EOF' > src/main.mts
 import {getGreeting} from './lib.mjs';
 
 const greeting = document.createElement('div');
 greeting.innerText = getGreeting('Max');
 document.body.appendChild(greeting);
 EOF
-cat <<EOF > src/style.css
+cat <<'EOF' > src/style.css
 body {
   font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
 }
