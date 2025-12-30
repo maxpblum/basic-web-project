@@ -101,3 +101,7 @@ Update jasmine-browser.mjs:
 * Empty any unnecessary `helpers`
 * Change spec directory to `src` to have test files alongside src files (corresponding to deleting the spec dir above)
 * Set default browser to `headlessChrome` to avoid needing to open a window to run tests
+
+# TODO
+
+Add an example test and make sure that the directions are followable and it works
