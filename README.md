@@ -46,6 +46,20 @@ export function getGreeting(name: string): string {
   return `Hello, ${name}!`;
 }
 EOF
+cat <<'EOF' > src/lib.spec.mts
+import {getGreeting} from './lib.mjs';
+
+describe('getGreeting', () => {
+  it('greets the user by name', () => {
+    expect(getGreeting('alice')).toEqual('alice');
+  });
+});
+EOF
+cat <<'EOF' > src/style.css
+body {
+  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+}
+EOF
 cat <<'EOF' > src/main.mts
 import {getGreeting} from './lib.mjs';
 
@@ -78,11 +92,12 @@ pnpm exec tsc --init
 ^ this creates a default tsconfig.json
 Set module resolution according to the TS docs (there's a link to the docs in tsconfig.json)
 Add */**/*.mts to included files if planning to use that extension
+Add "types": ["jasmine"] in tsconfig.json (assuming you'll install jasmine below).
 As shown, write imports with .mjs (or .js) at the end of the path for tsc to find the corresponding .mts (or .ts) file.
 Add a build script in the package.json. I've gone with `rm -rf build && tsc` to make sure stale filepaths get cleared out after name changes; probably should get rid of the rm -rf part if builds get slow in the future.
 
 ```sh
-pnpm add -D jasmine-browser-runner
+pnpm add -D jasmine-browser-runner @types/jasmine
 ```
 ```sh 
 pnpm exec jasmine-browser-runner init
@@ -91,7 +106,7 @@ Move the emitted jasmine-browser.mjs file to root dir and delete the spec dir (p
 Add test and serveTests scripts to package.json:
 ```
     "serveTests": "jasmine-browser-runner serve --config=./jasmine-browser.mjs",
-    "test": "jasmine-browser-runner runSpecs --config=./jasmine-browser.mjs"
+    "test": "\"$npm_execpath\" run build && jasmine-browser-runner runSpecs --config=./jasmine-browser.mjs"
 ```
 
 Update jasmine-browser.mjs:
@@ -99,7 +114,8 @@ Update jasmine-browser.mjs:
 * Add mjs and mts file extensions.
 * Convert `[sS]` to `s` if desired
 * Empty any unnecessary `helpers`
-* Change spec directory to `src` to have test files alongside src files (corresponding to deleting the spec dir above)
+* Change spec directory to `dist` to load the fully built spec files
+* Make srcFiles look for TypeScript files instead of JavaScript (unclear if this step is necessary or if we can leave srcFiles empty)
 * Set default browser to `headlessChrome` to avoid needing to open a window to run tests
 
 # TODO

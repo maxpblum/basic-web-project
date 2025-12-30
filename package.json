@@ -6,13 +6,14 @@
   "scripts": {
     "build": "rm -rf build && tsc",
     "serveTests": "jasmine-browser-runner serve --config=./jasmine-browser.mjs",
-    "test": "jasmine-browser-runner runSpecs --config=./jasmine-browser.mjs"
+    "test": "\"$npm_execpath\" run build && jasmine-browser-runner runSpecs --config=./jasmine-browser.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.23.0",
   "devDependencies": {
+    "@types/jasmine": "^5.1.13",
     "jasmine-browser-runner": "^3.0.0",
     "typescript": "^5.9.3"
   },

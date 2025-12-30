@@ -1,10 +1,10 @@
 export default {
   srcDir: "src",
   srcFiles: [
-    "**/*.js",
-    "**/*.mjs",
+    "**/*.ts",
+    "**/*.mts",
   ],
-  specDir: "src",
+  specDir: "dist",
   specFiles: [
     "**/*spec.js",
     "**/*spec.mjs",

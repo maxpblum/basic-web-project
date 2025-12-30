@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/jasmine':
+        specifier: ^5.1.13
+        version: 5.1.13
       jasmine-browser-runner:
         specifier: ^3.0.0
         version: 3.0.0(jasmine-core@5.13.0)
@@ -27,6 +30,9 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@types/jasmine@5.1.13':
+    resolution: {integrity: sha512-MYCcDkruFc92LeYZux5BC0dmqo2jk+M5UIZ4/oFnAPCXN9mCcQhLyj7F3/Za7rocVyt5YRr1MmqJqFlvQ9LVcg==}
 
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
@@ -513,6 +519,8 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@types/jasmine@5.1.13': {}
 
   accepts@2.0.0:
     dependencies:
