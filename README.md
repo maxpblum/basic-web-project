@@ -6,6 +6,9 @@ Fork this to get a project skeleton with an index HTML file, styles, TypeScript,
 pnpm build
 ```
 ```sh
+pnpm watch
+```
+```sh
 live-server
 ```
 (requires

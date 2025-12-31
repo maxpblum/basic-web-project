@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf build && tsc",
     "serveTests": "jasmine-browser-runner serve --config=./jasmine-browser.mjs",
-    "test": "\"$npm_execpath\" run build && jasmine-browser-runner runSpecs --config=./jasmine-browser.mjs"
+    "test": "\"$npm_execpath\" run build && jasmine-browser-runner runSpecs --config=./jasmine-browser.mjs",
+    "watch": "onchange \"src/**/*.mts\" -- \"$npm_execpath\" run build"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
   "devDependencies": {
     "@types/jasmine": "^5.1.13",
     "jasmine-browser-runner": "^3.0.0",
+    "onchange": "^7.1.0",
     "typescript": "^5.9.3"
   },
   "type": "module"
