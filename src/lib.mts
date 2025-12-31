@@ -1,3 +1,5 @@
+import * as Tone from "tone";
+
 const PENTATONIC_INTERVAL_SEMIS = [2, 2, 3, 2, 3] as const;
 const PITCHES = intervalSemisToPitches(220, [...PENTATONIC_INTERVAL_SEMIS, ...PENTATONIC_INTERVAL_SEMIS]);
 
@@ -15,41 +17,24 @@ function loopPitches(nulls: number, total: number, source: number[]): (number | 
   );
 }
 
-function schedulePitches(gain: GainNode, osc: OscillatorNode, startTime: number, pitches: (number | null)[]) {
-  gain.gain.setValueAtTime(5, startTime);
+function schedulePitches(synth: Tone.Synth, pitches: (number | null)[]) {
   pitches.forEach((pitch, i) => {
-    console.log(`Scheduling pitch ${pitch} for time ${startTime + i}`);
     if (pitch == null) {
-      gain.gain.setValueAtTime(0, startTime + i);
+      return;
     } else {
-      gain.gain.setValueAtTime(0.5, startTime + i);
-      osc.frequency.setValueAtTime(pitch!, startTime + i);
+      synth.triggerAttackRelease(pitch!, 1, i);
     }
   });
-  gain.gain.setValueAtTime(0, startTime + pitches.length);
 }
 
-function getInstrument(ctx: AudioContext) {
-  const gainNode = new GainNode(ctx);
-  const oscNode = new OscillatorNode(ctx, { type: 'triangle' });
-  
-  oscNode.connect(gainNode).connect(ctx.destination);
-  return { oscNode, gainNode };
-};
-
 export const getGraph = () => {
-  const ctx = new AudioContext();
-  const instruments = Array.from({ length: 3 }, () => getInstrument(ctx));
-
   return {
     play() {
-      instruments.forEach(({ oscNode, gainNode }, i) => {
-        oscNode.start();
-        schedulePitches(gainNode, oscNode, ctx.currentTime, loopPitches(i * 2, 20, PITCHES));
-      });
+      schedulePitches(new Tone.Synth().toDestination(), loopPitches(0, 20, PITCHES));
+      schedulePitches(new Tone.Synth().toDestination(), loopPitches(2, 20, PITCHES));
+      schedulePitches(new Tone.Synth().toDestination(), loopPitches(4, 20, PITCHES));
     },
     stop() {
-      ctx.close();
     }
   };
 };

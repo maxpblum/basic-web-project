@@ -23,5 +23,8 @@
     "onchange": "^7.1.0",
     "typescript": "^5.9.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "tone": "^15.1.22"
+  }
 }
