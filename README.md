@@ -9,17 +9,12 @@ pnpm build
 pnpm watch
 ```
 ```sh
-live-server
+pnpm liveServer
 ```
-(requires
-```sh
-pnpm add -g live-server
-```
-which does hot reloading)
 ```sh
 pnpm dev
 ```
-^ does both of the above together (still requires live-server)
+^ does both of the above together
 ```sh
 pnpm test
 ```

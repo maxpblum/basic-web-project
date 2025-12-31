@@ -19,6 +19,7 @@
     "@types/jasmine": "^5.1.13",
     "concurrently": "^9.2.1",
     "jasmine-browser-runner": "^3.0.0",
+    "live-server": "^1.2.2",
     "onchange": "^7.1.0",
     "typescript": "^5.9.3"
   },
