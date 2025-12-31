@@ -13,9 +13,13 @@ live-server
 ```
 (requires
 ```sh
-npm install -g live-server
+pnpm add -g live-server
 ```
 which does hot reloading)
+```sh
+pnpm dev
+```
+^ does both of the above together (still requires live-server)
 ```sh
 pnpm test
 ```
