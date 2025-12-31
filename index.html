@@ -6,6 +6,24 @@
     <title>Vanilla TS</title>
 </head>
 <body>
+    <div id="load-time-display"></div>
+    <script>
+      (function() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], { 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit' 
+        });
+        
+        // Selects the div right before this script tag
+        const displayDiv = document.currentScript.previousElementSibling;
+        displayDiv.textContent = "Loaded at " + timeString;
+      })();
+    </script>
+
+    <button id="playbutton">▶</button>
+    <button id="stopbutton">⏹</button>
     <script type="module" src="dist/main.mjs"></script>
 </body>
 </html>
