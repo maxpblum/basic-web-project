@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <div id="load-time-display"></div>
+    <script>
+      (function() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], { 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit' 
+        });
+        
+        // Selects the div right before this script tag
+        const displayDiv = document.currentScript.previousElementSibling;
+        displayDiv.textContent = "Loaded at " + timeString;
+      })();
+    </script>
+    <title>Tone.js Chiptune</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: #e74c3c;
+            color: white;
+            border: 4px solid #c0392b;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+        }
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>8-BIT ADVENTURE</h1>
+    <button id="play-btn">START GAME (PLAY)</button>
+
+<script>
+    // Define the instruments and logic inside a function to run on user click
+    // (Browsers block AudioContext until the user interacts with the page)
+    const playMusic = async () => {
+        await Tone.start();
+        console.log("Audio is ready");
+
+        // --- 1. SET THE TEMPO ---
+        Tone.Transport.bpm.value = 150; // Fast and upbeat
+
+        // --- 2. CREATE INSTRUMENTS ---
+        
+        // LEAD: Square wave for that classic NES melody sound
+        const leadSynth = new Tone.Synth({
+            oscillator: { type: "square" },
+            envelope: { 
+                attack: 0.01, 
+                decay: 0.1, 
+                sustain: 0.5, 
+                release: 0.1 
+            },
+            volume: -10
+        }).toDestination();
+
+        // BASS: Triangle wave for a rounder low end
+        const bassSynth = new Tone.Synth({
+            oscillator: { type: "triangle" },
+            envelope: { 
+                attack: 0.01, 
+                decay: 0.3, 
+                sustain: 0.8, 
+                release: 0.1 
+            },
+            volume: -5
+        }).toDestination();
+
+        // NOISE: For percussion (Hi-hats/Snare)
+        const noiseSynth = new Tone.NoiseSynth({
+            noise: { type: "white" },
+            envelope: { 
+                attack: 0.001, 
+                decay: 0.1, 
+                sustain: 0 
+            },
+            volume: -15
+        }).toDestination();
+
+        // --- 3. CREATE SEQUENCES (LOOPS) ---
+
+        // Melody: An arpeggiated catchy loop
+        const leadLoop = new Tone.Sequence((time, note) => {
+            if (note) leadSynth.triggerAttackRelease(note, "8n", time);
+        }, [
+            "E5", null, "G5", "E5", "A5", "B5", "A5", "G5", 
+            "E5", "G5", "A5", "B5", "C6", null, "B5", "G5"
+        ], "8n");
+
+        // Bass: Simple root notes driving the rhythm
+        const bassLoop = new Tone.Sequence((time, note) => {
+            if (note) bassSynth.triggerAttackRelease(note, "8n", time);
+        }, [
+            "E2", "E2", null, "E2", "A2", "A2", "G2", "G2",
+            "C3", "C3", "B2", "B2", "A2", "A2", "G2", "B2"
+        ], "8n");
+
+        // Drums: Simple off-beat noise burst
+        const drumLoop = new Tone.Sequence((time, note) => {
+            if (note === "x") noiseSynth.triggerAttackRelease("16n", time);
+        }, [
+            null, "x", null, "x", null, "x", "x", "x"
+        ], "8n");
+
+        // --- 4. START PLAYBACK ---
+        leadLoop.start(0);
+        bassLoop.start(0);
+        drumLoop.start(0);
+
+        Tone.Transport.start();
+        
+        // Update button text
+        document.getElementById("play-btn").innerText = "PLAYING...";
+        document.getElementById("play-btn").disabled = true;
+    };
+
+    document.getElementById("play-btn").addEventListener("click", playMusic);
+
+</script>
+</body>
+</html>
