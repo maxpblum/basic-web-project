@@ -1,0 +1,55 @@
+<script src="https://unpkg.com/tone"></script>
+<script src="https://unpkg.com/@tonejs/midi"></script>
+
+<button id="play-btn">Play MIDI</button>
+
+<script>
+  document.getElementById('play-btn').addEventListener('click', async () => {
+    // 1. Start Audio Context (Browsers require user interaction)
+    await Tone.start();
+    console.log("Audio ready");
+
+    // 2. Load and Parse the MIDI file
+    // Replace with the path to your specific MIDI file
+    const midi = await Midi.fromUrl("./invent4.mid");
+    
+    // 3. Create a Synth to play the notes
+    // PolySynth is used because MIDI files often contain chords
+    const synth = new Tone.PolySynth(Tone.Synth, {
+      envelope: {
+        attack: 0.02,
+        decay: 0.1,
+        sustain: 0.3,
+        release: 1
+      }
+    }).toDestination();
+
+    window.midi = midi;
+
+    // 4. Schedule the events
+    // The Midi object contains an array of tracks
+    midi.tracks.forEach(track => {
+      
+      // 'track.notes' is an array of objects like:
+      // { name: "C4", time: 0.5, duration: 0.2, velocity: 0.8 }
+      
+      // Tone.Part expects an array of objects with a "time" property, 
+      // which track.notes already has!
+      const part = new Tone.Part((time, note) => {
+        
+        // Use the parameters from the note object
+        synth.triggerAttackRelease(
+          note.name, 
+          note.duration, 
+          time, 
+          note.velocity
+        );
+        
+      }, track.notes).start(0);
+      
+    });
+
+    // 5. Start the Transport to hear the music
+    Tone.Transport.start();
+  });
+</script>
