@@ -9,7 +9,7 @@
     "test": "\"$npm_execpath\" run build && jasmine-browser-runner runSpecs --config=./jasmine-browser.mjs",
     "watch": "onchange \"src/**/*.mts\" -- \"$npm_execpath\" run build",
     "liveServer": "live-server --port=12345",
-    "dev": "concurrently --names \"BUILD,SERVER\" --prefixColors \"blue,green\" \"$npm_execpath run watch\" \"$npm_execpath run liveServer\""
+    "dev": "\"$npm_execpath\" run build && concurrently --names \"BUILD,SERVER\" --prefixColors \"blue,green\" \"$npm_execpath run watch\" \"$npm_execpath run liveServer\""
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@tonejs/midi": "^2.0.28",
     "tone": "^15.1.22"
   }
 }
