@@ -1,4 +1,4 @@
-import {getGraph} from './lib.mjs';
+import { getGraph } from './lib.mjs';
 
 const graph = getGraph();
 
