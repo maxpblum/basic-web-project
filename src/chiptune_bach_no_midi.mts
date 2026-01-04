@@ -600,6 +600,27 @@ const lh = [
   expand({ durationTicks: 720, midi: 38, name: 'D2', pos: '103.1.000' }),
 ];
 
+class PulseSynth extends Tone.Synth {
+  static override getDefaults(): Tone.SynthOptions {
+    const superDefaults = Tone.Synth.getDefaults();
+    return {
+      ...superDefaults,
+      oscillator: {
+        ...superDefaults.oscillator,
+        type: 'pulse',
+        width: 0.5,
+      },
+      envelope: {
+        ...superDefaults.envelope,
+        attack: 0,
+        decay: 0,
+        sustain: 1,
+        release: 0,
+      },
+    };
+  }
+}
+
 document.getElementById('play-btn')!.addEventListener('click', async () => {
   // 1. Start Audio Context (Browsers require user interaction)
   await Tone.start();
@@ -607,12 +628,12 @@ document.getElementById('play-btn')!.addEventListener('click', async () => {
 
   // 3. Create a Synth to play the notes
   // PolySynth is used because MIDI files often contain chords
-  const synth = new Tone.PolySynth(Tone.Synth, {
+  const synth = new Tone.PolySynth(PulseSynth, {
     envelope: {
-      attack: 0.02,
-      decay: 0.1,
-      sustain: 0.3,
-      release: 1,
+      attack: 0,
+      decay: 0,
+      sustain: 1,
+      release: 0,
     },
   }).toDestination();
 
