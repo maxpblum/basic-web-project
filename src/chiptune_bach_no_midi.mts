@@ -51,6 +51,43 @@ function expand(n: BasicNote): ConvertedNote {
   };
 }
 
+export function arpeggiate(
+  pitches: string[],
+  totalDurationTicks: number,
+  noteDurationTicks: number,
+  startPos: `${number}.${number}.${number}`
+): ConvertedNote[] {
+  if (pitches.length === 0) {
+    throw new Error('Pitches array cannot be empty');
+  }
+  if (totalDurationTicks % noteDurationTicks !== 0) {
+    throw new Error('Note duration must divide evenly into total duration');
+  }
+
+  const numNotes = totalDurationTicks / noteDurationTicks;
+  const startPosObj = posOfStr(startPos);
+  const startTicks =
+    180 * (startPosObj.measure - 1) +
+    60 * (startPosObj.beat - 1) +
+    60 * startPosObj.partial;
+
+  const notes: ConvertedNote[] = [];
+
+  for (let i = 0; i < numNotes; i++) {
+    const pitch = pitches[i % pitches.length]!;
+    const currentTicks = startTicks + i * noteDurationTicks;
+
+    notes.push({
+      name: pitch,
+      duration: noteDurationTicks * TICK_LENGTH_S,
+      time: currentTicks * TICK_LENGTH_S,
+      velocity: VELOCITY,
+    });
+  }
+
+  return notes;
+}
+
 const rh = [
   expand({ durationTicks: 60, midi: 62, name: 'D4', pos: '1.1.000' }),
   expand({ durationTicks: 60, midi: 64, name: 'E4', pos: '1.2.000' }),
